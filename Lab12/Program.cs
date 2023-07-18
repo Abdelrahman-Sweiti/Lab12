@@ -1,3 +1,7 @@
+using Lab12.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+
 namespace Lab12
 {
     public class Program
@@ -9,6 +13,13 @@ namespace Lab12
             // Add services to the container.
             builder.Services.AddRazorPages();
 
+            builder.Services.AddControllers();
+
+            string connString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services
+                .AddDbContext<HotelContext>
+                (opions => opions.UseSqlServer(connString));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
