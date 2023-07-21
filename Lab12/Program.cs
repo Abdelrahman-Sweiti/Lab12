@@ -1,4 +1,7 @@
 using Lab12.Data;
+using Lab12.Models.Interfaces;
+using Lab12.Models.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
@@ -19,7 +22,12 @@ namespace Lab12
 
             builder.Services
                 .AddDbContext<HotelContext>
-                (opions => opions.UseSqlServer(connString));
+            (opions => opions.UseSqlServer(connString));
+
+            builder.Services.AddTransient<IHotel, HotelService>();
+            builder.Services.AddTransient<IRoom, RoomService>();
+            builder.Services.AddTransient<IAmenity, AmenityService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -36,7 +44,7 @@ namespace Lab12
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.MapControllers();
             app.MapRazorPages();
 
             app.Run();

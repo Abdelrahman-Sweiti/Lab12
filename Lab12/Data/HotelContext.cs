@@ -26,10 +26,10 @@ namespace Lab12.Data
                 new Room() { Id = 3, Name = "Penthouse Suite", Layout = 3 }
             );
 
-            modelBuilder.Entity<Amenities>().HasData(
-                new Amenities() { Id = 1, Name = "Fancy" },
-                new Amenities() { Id = 2, Name = "Free Wi-Fi" },
-                new Amenities() { Id = 3, Name = "Swimming Pool" }
+            modelBuilder.Entity<Amenity>().HasData(
+                new Amenity() { Id = 1, Name = "Fancy" },
+                new Amenity() { Id = 2, Name = "Free Wi-Fi" },
+                new Amenity() { Id = 3, Name = "Swimming Pool" }
             );
         }
 
@@ -42,7 +42,7 @@ namespace Lab12.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<HotelRoom> HotelRoom { get; set; }
         public DbSet<RoomAmenities> RoomAmenities { get; set; }
-        public DbSet<Amenities> Amenities { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
 
     }
 }
