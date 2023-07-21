@@ -21,7 +21,7 @@ namespace Lab12.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Lab12.Models.Amenities", b =>
+            modelBuilder.Entity("Lab12.Models.Amenity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
