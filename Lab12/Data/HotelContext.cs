@@ -31,7 +31,27 @@ namespace Lab12.Data
                 new Amenity() { Id = 2, Name = "Free Wi-Fi" },
                 new Amenity() { Id = 3, Name = "Swimming Pool" }
             );
+
+
+            modelBuilder.Entity<RoomAmenity>().HasKey(
+                RoomAmenities => new
+                {
+                    RoomAmenities.AmenityID,
+                    RoomAmenities.RoomID
+                }
+                );
+
+
+            modelBuilder.Entity<HotelRoom>().HasKey(
+               HotelRooms => new {
+                   HotelRooms.HotelID,
+                   HotelRooms.RoomID
+
+
+               });
         }
+
+
 
 
 
@@ -41,8 +61,9 @@ namespace Lab12.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<HotelRoom> HotelRoom { get; set; }
-        public DbSet<RoomAmenities> RoomAmenities { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<RoomAmenity> RoomAmenities { get; set; }
+
 
     }
 }

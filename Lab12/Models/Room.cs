@@ -8,5 +8,10 @@
 
 
 
+        //Props
+        public List<RoomAmenity> RoomAmenities { get; set; }
+        public List<HotelRoom> hotelroom { get; set; }
+
+
     }
 }

@@ -35,13 +35,13 @@ namespace Lab12.Models.Services
 
         public async Task<List<Amenity>> GetAmenities()
         {
-           var Amenities = await _context.Amenities.ToListAsync();
+           var Amenities = await _context.Amenities.Include(x=>x.RoomAmenities).ToListAsync();
             return Amenities;
         }
 
         public async Task<Amenity> GetAmenity(int amenityId)
         {
-            var Amenity = await _context.Amenities.FindAsync(amenityId);
+            var Amenity = await _context.Amenities.Include(x => x.RoomAmenities).FirstOrDefaultAsync(x => x.Id == amenityId);
             return Amenity;
         }
 

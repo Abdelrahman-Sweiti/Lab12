@@ -26,22 +26,6 @@ namespace Lab12.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HotelRoom",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    RoomID = table.Column<int>(type: "int", nullable: false),
-                    Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PetFriendly = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HotelRoom", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Hotels",
                 columns: table => new
                 {
@@ -60,19 +44,6 @@ namespace Lab12.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoomAmenities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoomAmenities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -84,6 +55,57 @@ namespace Lab12.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HotelRoom",
+                columns: table => new
+                {
+                    HotelID = table.Column<int>(type: "int", nullable: false),
+                    RoomID = table.Column<int>(type: "int", nullable: false),
+                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PetFriendly = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HotelRoom", x => new { x.HotelID, x.RoomID });
+                    table.ForeignKey(
+                        name: "FK_HotelRoom_Hotels_HotelID",
+                        column: x => x.HotelID,
+                        principalTable: "Hotels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HotelRoom_Rooms_RoomID",
+                        column: x => x.RoomID,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoomAmenities",
+                columns: table => new
+                {
+                    AmenityID = table.Column<int>(type: "int", nullable: false),
+                    RoomID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoomAmenities", x => new { x.AmenityID, x.RoomID });
+                    table.ForeignKey(
+                        name: "FK_RoomAmenities_Amenities_AmenityID",
+                        column: x => x.AmenityID,
+                        principalTable: "Amenities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoomAmenities_Rooms_RoomID",
+                        column: x => x.RoomID,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -115,22 +137,32 @@ namespace Lab12.Migrations
                     { 2, 2, "Standard Room" },
                     { 3, 3, "Penthouse Suite" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HotelRoom_RoomID",
+                table: "HotelRoom",
+                column: "RoomID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomAmenities_RoomID",
+                table: "RoomAmenities",
+                column: "RoomID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Amenities");
+                name: "HotelRoom");
 
             migrationBuilder.DropTable(
-                name: "HotelRoom");
+                name: "RoomAmenities");
 
             migrationBuilder.DropTable(
                 name: "Hotels");
 
             migrationBuilder.DropTable(
-                name: "RoomAmenities");
+                name: "Amenities");
 
             migrationBuilder.DropTable(
                 name: "Rooms");
