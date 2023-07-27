@@ -20,3 +20,8 @@ lastly i migrated the models into the MSMS and updated the database and created 
 
 ## Time Taken
 20 minutes
+
+
+
+## Lab14 
+![image](https://github.com/Abdelrahman-Sweiti/Lab12/assets/102755704/84472bc9-7229-4c0f-953a-1b7889dc0526)
