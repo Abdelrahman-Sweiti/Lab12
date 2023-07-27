@@ -54,7 +54,7 @@ namespace Lab12.Controllers
 
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("({roomId}/Amenity/{amenityId}")]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
             await _room.Create(room);
@@ -64,7 +64,7 @@ namespace Lab12.Controllers
         }
 
         // DELETE: api/Rooms/5
-        [HttpDelete("{id}")]
+        [HttpDelete("({roomId}/Amenity/{amenityId}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             await _room.Delete(id);

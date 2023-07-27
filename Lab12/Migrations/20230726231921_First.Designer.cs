@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab12.Migrations
 {
     [DbContext(typeof(HotelContext))]
-    [Migration("20230719185458_First")]
+    [Migration("20230726231921_First")]
     partial class First
     {
         /// <inheritdoc />
@@ -129,11 +129,11 @@ namespace Lab12.Migrations
 
             modelBuilder.Entity("Lab12.Models.HotelRoom", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("HotelID")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("RoomID")
+                        .HasColumnType("int");
 
                     b.Property<bool>("PetFriendly")
                         .HasColumnType("bit");
@@ -141,13 +141,12 @@ namespace Lab12.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("RoomID")
-                        .HasColumnType("int");
-
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("HotelID", "RoomID");
+
+                    b.HasIndex("RoomID");
 
                     b.ToTable("HotelRoom");
                 });
@@ -192,20 +191,74 @@ namespace Lab12.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab12.Models.RoomAmenities", b =>
+            modelBuilder.Entity("Lab12.Models.RoomAmenity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("AmenityID")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("RoomID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AmenityID", "RoomID");
+
+                    b.HasIndex("RoomID");
 
                     b.ToTable("RoomAmenities");
+                });
+
+            modelBuilder.Entity("Lab12.Models.HotelRoom", b =>
+                {
+                    b.HasOne("Lab12.Models.Hotel", "hotel")
+                        .WithMany("hotelroom")
+                        .HasForeignKey("HotelID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lab12.Models.Room", "room")
+                        .WithMany("hotelroom")
+                        .HasForeignKey("RoomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("hotel");
+
+                    b.Navigation("room");
+                });
+
+            modelBuilder.Entity("Lab12.Models.RoomAmenity", b =>
+                {
+                    b.HasOne("Lab12.Models.Amenity", "Amenity")
+                        .WithMany("RoomAmenities")
+                        .HasForeignKey("AmenityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lab12.Models.Room", "Room")
+                        .WithMany("RoomAmenities")
+                        .HasForeignKey("RoomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Amenity");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Lab12.Models.Amenity", b =>
+                {
+                    b.Navigation("RoomAmenities");
+                });
+
+            modelBuilder.Entity("Lab12.Models.Hotel", b =>
+                {
+                    b.Navigation("hotelroom");
+                });
+
+            modelBuilder.Entity("Lab12.Models.Room", b =>
+                {
+                    b.Navigation("RoomAmenities");
+
+                    b.Navigation("hotelroom");
                 });
 #pragma warning restore 612, 618
         }

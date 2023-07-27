@@ -34,13 +34,13 @@ namespace Lab12.Models.Services
 
         public async Task<Room> GetRoom(int roomId)
         {
-            var Room = await _context.Rooms.FindAsync(roomId);
+            var Room = await _context.Rooms.Include(x => x.RoomAmenities).ThenInclude(y=>y.Amenity).FirstOrDefaultAsync(x=>x.Id==roomId);
             return Room;
         }
 
         public async Task<List<Room>> GetRooms()
         {
-            var Rooms = await _context.Rooms.ToListAsync();
+            var Rooms = await _context.Rooms.Include(x=>x.RoomAmenities).ThenInclude(y=>y.Amenity).ToListAsync();
             return Rooms;
         }
 
@@ -59,5 +59,27 @@ namespace Lab12.Models.Services
             return CurrentRoom;
 
         }
+
+
+      
+        public async Task AddAmenityToRoom(int roomId, int amenityId)
+        {
+            RoomAmenity newRoomAmenity = new RoomAmenity()
+            {
+                RoomID = roomId,
+                AmenityID = amenityId
+            };
+            _context.Entry(newRoomAmenity).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+        }
+
+      
+        public async Task RemoveAmentityFromRoom(int roomId, int amenityId)
+        {
+            var removeAmentity = _context.RoomAmenities.FirstOrDefaultAsync(x => x.RoomID == roomId && x.AmenityID == amenityId);
+            _context.Entry(removeAmentity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
