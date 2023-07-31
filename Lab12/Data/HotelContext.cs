@@ -45,10 +45,12 @@ namespace Lab12.Data
             modelBuilder.Entity<HotelRoom>().HasKey(
                HotelRooms => new {
                    HotelRooms.HotelID,
-                   HotelRooms.RoomID
+                   HotelRooms.RoomNumber
 
 
                });
+
+
         }
 
 

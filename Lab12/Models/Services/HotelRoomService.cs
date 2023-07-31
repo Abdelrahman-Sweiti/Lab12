@@ -1,4 +1,5 @@
-﻿using Lab12.Data;
+﻿using Humanizer;
+using Lab12.Data;
 using Lab12.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +14,24 @@ namespace Lab12.Models.Services
             _context = context;
         }
 
-        public async Task<HotelRoom> Create(HotelRoom hotelroom)
+        public async Task<HotelRoom> Create(HotelRoom hotelroom,int HotelID)
         {
+            var room = await _context.Rooms.FindAsync(hotelroom.RoomID);
+            var hotel = await  _context.Hotels.FindAsync(hotelroom.HotelID);
+
+            hotelroom.HotelID = HotelID;
+
+            hotelroom.Room = room;
+            hotelroom.Hotel = hotel;
+
             _context.HotelRoom.Add(hotelroom);
             await _context.SaveChangesAsync();
             return hotelroom;
         }
 
-        public async Task Delete(int HotelID, int RoomID)
+        public async Task Delete(int HotelID, int RoomNumber)
         {
-            HotelRoom hotelroom = await GetHotelRoom(HotelID,RoomID);
+            HotelRoom hotelroom = await GetHotelRoom(HotelID, RoomNumber);
             if (hotelroom != null)
             {
                 _context.HotelRoom.Remove(hotelroom);
@@ -30,21 +39,21 @@ namespace Lab12.Models.Services
             }
         }
 
-        public async Task<HotelRoom> GetHotelRoom(int HotelID,int RoomID)
+        public async Task<HotelRoom> GetHotelRoom(int HotelID,int RoomNumber)
         {
-            var HotelRoom = await _context.HotelRoom.FindAsync(HotelID,RoomID);
+            var HotelRoom = await _context.HotelRoom.FindAsync(HotelID, RoomNumber);
             return HotelRoom;
         }
 
         public async Task<List<HotelRoom>> GetHotelRooms()
         {
-            var HotelRooms = await _context.HotelRoom.ToListAsync();
+            var HotelRooms = await _context.HotelRoom.Include(r=>r.Hotel).Include(h=>h.Room).ToListAsync();
             return HotelRooms;
         }
 
-        public async Task<HotelRoom> UpdateHotelRoom(int HotelID,int RoomID, HotelRoom hotelroom)
+        public async Task<HotelRoom> UpdateHotelRoom(int HotelID,int RoomNumber, HotelRoom hotelroom)
         {
-            HotelRoom CurrentHotelRoom = await GetHotelRoom(HotelID, RoomID);
+            HotelRoom CurrentHotelRoom = await GetHotelRoom(HotelID, RoomNumber);
 
 
             if (CurrentHotelRoom != null)

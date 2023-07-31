@@ -62,14 +62,14 @@ namespace Lab12.Migrations
                 columns: table => new
                 {
                     HotelID = table.Column<int>(type: "int", nullable: false),
-                    RoomID = table.Column<int>(type: "int", nullable: false),
                     RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    RoomID = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PetFriendly = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HotelRoom", x => new { x.HotelID, x.RoomID });
+                    table.PrimaryKey("PK_HotelRoom", x => new { x.HotelID, x.RoomNumber });
                     table.ForeignKey(
                         name: "FK_HotelRoom_Hotels_HotelID",
                         column: x => x.HotelID,

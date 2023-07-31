@@ -129,7 +129,7 @@ namespace Lab12.Migrations
                     b.Property<int>("HotelID")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomID")
+                    b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
                     b.Property<bool>("PetFriendly")
@@ -138,10 +138,10 @@ namespace Lab12.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("RoomNumber")
+                    b.Property<int>("RoomID")
                         .HasColumnType("int");
 
-                    b.HasKey("HotelID", "RoomID");
+                    b.HasKey("HotelID", "RoomNumber");
 
                     b.HasIndex("RoomID");
 
@@ -206,13 +206,13 @@ namespace Lab12.Migrations
             modelBuilder.Entity("Lab12.Models.HotelRoom", b =>
                 {
                     b.HasOne("Lab12.Models.Hotel", "hotel")
-                        .WithMany("hotelroom")
+                        .WithMany("HotelRooms")
                         .HasForeignKey("HotelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Lab12.Models.Room", "room")
-                        .WithMany("hotelroom")
+                        .WithMany("HotelRoom")
                         .HasForeignKey("RoomID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -248,14 +248,14 @@ namespace Lab12.Migrations
 
             modelBuilder.Entity("Lab12.Models.Hotel", b =>
                 {
-                    b.Navigation("hotelroom");
+                    b.Navigation("HotelRooms");
                 });
 
             modelBuilder.Entity("Lab12.Models.Room", b =>
                 {
-                    b.Navigation("RoomAmenities");
+                    b.Navigation("HotelRoom");
 
-                    b.Navigation("hotelroom");
+                    b.Navigation("RoomAmenities");
                 });
 #pragma warning restore 612, 618
         }
