@@ -1,18 +1,20 @@
-﻿namespace Lab12.Models.Interfaces
+﻿using Lab12.Models.DTO;
+
+namespace Lab12.Models.Interfaces
 {
     public interface IRoom
     {
-        Task<Room> Create(Room room);
+        Task<RoomDTO> Create(RoomDTO Roomdto);
 
         // GET All
-        Task<List<Room>> GetRooms();
+        Task<List<RoomDTO>> GetRooms();
 
         // GET Room By Id
 
-        Task<Room> GetRoom(int roomId);
+        Task<RoomDTO> GetRoom(int roomId);
 
         // Update
-        Task<Room> UpdateRoom(int id, Room room);
+        Task<RoomDTO> UpdateRoom(int id, RoomDTO Roomdto);
 
         // Delete 
 

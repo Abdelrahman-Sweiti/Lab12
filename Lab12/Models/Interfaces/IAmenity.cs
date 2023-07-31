@@ -1,18 +1,20 @@
-﻿namespace Lab12.Models.Interfaces
+﻿using Lab12.Models.DTO;
+
+namespace Lab12.Models.Interfaces
 {
     public interface IAmenity
     {
-        Task<Amenity> Create(Amenity amenity);
+        Task<AmenityDTO> Create(AmenityDTO amenity);
 
         // GET All
-        Task<List<Amenity>> GetAmenities();
+        Task<List<AmenityDTO>> GetAmenities();
 
         // GET Amenity By Id
 
-        Task<Amenity> GetAmenity(int amenityId);
+        Task<AmenityDTO> GetAmenity(int amenityId);
 
         // Update
-        Task<Amenity> UpdateAmenity(int id, Amenity amenity);
+        Task<AmenityDTO> UpdateAmenity(int id, AmenityDTO amenity);
 
         // Delete 
 

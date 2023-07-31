@@ -1,24 +1,33 @@
 ﻿using Lab12.Data;
 using Lab12.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
+namespace Lab12.Models.DTO
 
-namespace Lab12.Models.Services
 {
     public class RoomService : IRoom
     {
-
+        private readonly IRoom _room;
         private readonly HotelContext _context;
 
-        public RoomService(HotelContext context)
+        public RoomService(HotelContext context,IRoom room)
         {
             _context = context;
+            _room = room;
         }
 
 
-        public async Task<Room> Create(Room room)
+        public async Task<RoomDTO> Create(RoomDTO roomdto)
         {
-            _context.Rooms.Add(room);
-            await _context.SaveChangesAsync();
+            RoomDTO roomdto = new RoomDTO()
+            {
+                ID = roomdto.ID,
+                Name = roomdto.Name,
+                Layout = roomdto.Layout,
+
+
+            };
+
+             await _context.SaveChangesAsync();
             return room;
         }
 
