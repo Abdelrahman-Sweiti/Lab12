@@ -41,7 +41,7 @@ namespace Lab12.Models.Services
 
         public async Task<List<Hotel>> GetHotels()
         {
-            var Hotels = await _context.Hotels.ToListAsync();
+            var Hotels = await _context.Hotels.Include(x=>x.HotelRooms).ToListAsync();
             return Hotels;
         }
 

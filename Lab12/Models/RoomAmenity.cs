@@ -9,8 +9,8 @@
         /// Nav Props
         /// 
 
-        public Amenity Amenity { get; set; }
-        public Room Room { get; set; }
+        public Amenity? Amenity { get; set; }
+        public Room? Room { get; set; }
 
 
     }
