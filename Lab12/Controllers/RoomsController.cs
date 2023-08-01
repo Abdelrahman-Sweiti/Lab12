@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab12.Data;
 using Lab12.Models;
 using Lab12.Models.Interfaces;
+using Lab12.Models.DTO;
 
 namespace Lab12.Controllers
 {
@@ -24,7 +25,7 @@ namespace Lab12.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
             return await _room.GetRooms();
 
@@ -32,7 +33,7 @@ namespace Lab12.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             return await _room.GetRoom(id);
         }

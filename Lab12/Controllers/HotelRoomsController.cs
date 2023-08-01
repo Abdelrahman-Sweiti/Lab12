@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab12.Data;
 using Lab12.Models;
 using Lab12.Models.Interfaces;
+using Lab12.Models.DTO;
 
 namespace Lab12.Controllers
 {
@@ -24,9 +25,9 @@ namespace Lab12.Controllers
 
         // GET: api/HotelRooms
         [HttpGet("{HotelID}/Rooms")]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms(int HotelID)
         {
-            return await _hotelroom.GetHotelRooms();
+            return await _hotelroom.GetHotelRooms(HotelID);
 
         }
 
@@ -34,14 +35,14 @@ namespace Lab12.Controllers
         [HttpGet("{HotelID}/Rooms/{RoomNumber}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int HotelID,int RoomNumber)
         {
-            return await _hotelroom.GetHotelRoom(HotelID,RoomNumber);
+            return await _hotelroom.GetHotelRoom(HotelID, RoomNumber);
 
         }
 
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{HotelID}/Rooms/{RoomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(int HotelID,int RoomNumber, HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int HotelID,int RoomNumber, HotelRoomDTO hotelRoom)
         {
             if (HotelID != hotelRoom.HotelID && RoomNumber !=hotelRoom.RoomNumber)
             {

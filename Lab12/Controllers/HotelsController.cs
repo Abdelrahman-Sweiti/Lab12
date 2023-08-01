@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab12.Data;
 using Lab12.Models;
 using Lab12.Models.Interfaces;
+using Lab12.Models.DTO;
 
 namespace Lab12.Controllers
 {
@@ -24,14 +25,14 @@ namespace Lab12.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
           return await _hotel.GetHotels();
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
           return await _hotel.GetHotel(id);
         }
