@@ -10,14 +10,14 @@ namespace Lab12.Models.Services
     {
         private readonly HotelContext _context;
         private readonly IAmenity _amenity;
-        public AmenityService(HotelContext context,IAmenity amenity)
+        public AmenityService(HotelContext context)
         {
             _context = context;
-            _amenity = amenity;
+            
         }
 
 
-        public async Task<AmenityDTO> Create(Amenity amenity)
+        public async Task<AmenityDTO> Create(AmenityDTO amenity)
         {
             _context.Entry(amenity).State = EntityState.Added;
 
@@ -25,7 +25,7 @@ namespace Lab12.Models.Services
 
             AmenityDTO amenityDto = new AmenityDTO
             {
-                ID = amenity.Id,
+                ID = amenity.ID,
                 Name = amenity.Name
             };
 
@@ -58,20 +58,22 @@ namespace Lab12.Models.Services
             //Amenity amenity = await _context.Amenities.FindAsync(id);
 
             //return amenity;
-
-            return await _context.Amenities.Select(a => new AmenityDTO
+            var amenity = await _context.Amenities.Select(a => new AmenityDTO
             {
                 ID = a.Id,
                 Name = a.Name,
 
             }).FirstOrDefaultAsync(x => x.ID == id);
+            return amenity;
+
+
         }
 
-        public async Task<AmenityDTO> UpdateAmenity(int id, Amenity amenity)
+        public async Task<AmenityDTO> UpdateAmenity(int id, AmenityDTO amenity)
         {
             AmenityDTO amenityDto = new AmenityDTO
             {
-                ID = amenity.Id,
+                ID = amenity.ID,
                 Name = amenity.Name
             };
             _context.Entry(amenity).State = EntityState.Modified;

@@ -33,7 +33,7 @@ namespace Lab12.Controllers
 
         // GET: api/HotelRooms/5
         [HttpGet("{HotelID}/Rooms/{RoomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int HotelID,int RoomNumber)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int HotelID,int RoomNumber)
         {
             return await _hotelroom.GetHotelRoom(HotelID, RoomNumber);
 
@@ -58,7 +58,7 @@ namespace Lab12.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Route("api/Hotels/{HotelID}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom,int HotelID)
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom,int HotelID)
         {
             if (hotelRoom == null)
             {

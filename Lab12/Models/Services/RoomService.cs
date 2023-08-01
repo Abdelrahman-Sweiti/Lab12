@@ -7,17 +7,16 @@ namespace Lab12.Models.DTO
 {
     public class RoomService : IRoom
     {
-        private readonly IRoom _room;
         private readonly HotelContext _context;
 
-        public RoomService(HotelContext context,IRoom room)
+        public RoomService(HotelContext context)
         {
             _context = context;
-            _room = room;
+            
         }
 
 
-        public async Task<RoomDTO> Create(Room room)
+        public async Task<RoomDTO> Create(RoomDTO room)
         {
 
             _context.Entry(room).State = EntityState.Added;
@@ -26,7 +25,7 @@ namespace Lab12.Models.DTO
 
             RoomDTO roomDTO = new RoomDTO
             {
-                ID = room.Id,
+                ID = room.ID,
                 Name = room.Name,
                 Layout = room.Layout
             };
@@ -43,7 +42,7 @@ namespace Lab12.Models.DTO
 
         public async Task<RoomDTO> GetRoom(int roomId)
         {
-            return await _context.Rooms.Select(r => new RoomDTO
+            var room =  await _context.Rooms.Select(r => new RoomDTO
             {
                 ID = r.Id,
                 Name = r.Name,
@@ -54,6 +53,7 @@ namespace Lab12.Models.DTO
                     Name = a.Amenity.Name
                 }).ToList()
             }).FirstOrDefaultAsync(x => x.ID == roomId);
+            return room;
         }
 
         public async Task<List<RoomDTO>> GetRooms()
@@ -71,11 +71,11 @@ namespace Lab12.Models.DTO
             }).ToListAsync();
         }
 
-        public async Task<RoomDTO> UpdateRoom(int id, Room UpdatedRoom)
+        public async Task<RoomDTO> UpdateRoom(int id, RoomDTO UpdatedRoom)
         {
             RoomDTO roomDTO = new RoomDTO
             {
-                ID = UpdatedRoom.Id,
+                ID = UpdatedRoom.ID,
                 Name = UpdatedRoom.Name,
                 Layout = UpdatedRoom.Layout
             };

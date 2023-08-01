@@ -16,7 +16,7 @@ namespace Lab12.Models.Services
         }
 
 
-        public async Task<HotelDTO> Create(Hotel hotel)
+        public async Task<HotelDTO> Create(HotelDTO hotel)
         {
 
             _context.Entry(hotel).State = EntityState.Added;
@@ -25,7 +25,7 @@ namespace Lab12.Models.Services
 
             HotelDTO hotelDTO = new HotelDTO
             {
-                ID = hotel.Id,
+                ID = hotel.ID,
                 Name = hotel.Name,
                 StreetAddress = hotel.StreetAddress,
                 City = hotel.City,
@@ -48,7 +48,7 @@ namespace Lab12.Models.Services
 
         public async Task<HotelDTO> GetHotel(int id)
         {
-            return await _context.Hotels.Select(
+            var hotel =  await _context.Hotels.Select(
                 hotel => new HotelDTO
                 {
                     ID = hotel.Id,
@@ -78,6 +78,7 @@ namespace Lab12.Models.Services
                         }
                     }).ToList()
                 }).FirstOrDefaultAsync(h => h.ID == id);
+            return hotel;
         }
 
         public async Task<List<HotelDTO>> GetHotels()
@@ -115,11 +116,11 @@ namespace Lab12.Models.Services
                 }).ToListAsync();
         }
 
-        public async Task<HotelDTO> UpdateHotel(int id, Hotel hotel)
+        public async Task<HotelDTO> UpdateHotel(int id, HotelDTO hotel)
         {
             HotelDTO hotelDTO = new HotelDTO
             {
-                ID = hotel.Id,
+                ID = hotel.ID,
                 Name = hotel.Name,
                 StreetAddress = hotel.StreetAddress,
                 City = hotel.City,
