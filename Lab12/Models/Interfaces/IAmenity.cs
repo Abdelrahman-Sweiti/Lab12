@@ -4,7 +4,7 @@ namespace Lab12.Models.Interfaces
 {
     public interface IAmenity
     {
-        Task<AmenityDTO> Create(Amenity amenity);
+        Task<AmenityDTO> Create(AmenityDTO amenity);
 
         // GET All
         Task<List<AmenityDTO>> GetAmenities();
@@ -14,7 +14,7 @@ namespace Lab12.Models.Interfaces
         Task<AmenityDTO> GetAmenity(int amenityId);
 
         // Update
-        Task<AmenityDTO> UpdateAmenity(int id, Amenity amenity);
+        Task<AmenityDTO> UpdateAmenity(int id, AmenityDTO amenity);
 
         // Delete 
 

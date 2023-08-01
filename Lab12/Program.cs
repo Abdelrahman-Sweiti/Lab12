@@ -17,7 +17,6 @@ namespace Lab12
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            builder.Services.AddControllers();
 
             builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -27,9 +26,9 @@ namespace Lab12
                 .AddDbContext<HotelContext>
             (opions => opions.UseSqlServer(connString));
 
-            builder.Services.AddTransient<IHotel, HotelService>();
-            builder.Services.AddTransient<IRoom, RoomService>();
             builder.Services.AddTransient<IAmenity, AmenityService>();
+            builder.Services.AddTransient<IRoom, RoomService>();
+            builder.Services.AddTransient<IHotel, HotelService>();
             builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
 
 

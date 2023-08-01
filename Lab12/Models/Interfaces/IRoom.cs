@@ -4,7 +4,7 @@ namespace Lab12.Models.Interfaces
 {
     public interface IRoom
     {
-        Task<RoomDTO> Create(Room Roomdto);
+        Task<RoomDTO> Create(RoomDTO Roomdto);
 
         // GET All
         Task<List<RoomDTO>> GetRooms();
@@ -14,7 +14,7 @@ namespace Lab12.Models.Interfaces
         Task<RoomDTO> GetRoom(int roomId);
 
         // Update
-        Task<RoomDTO> UpdateRoom(int id, Room Roomdto);
+        Task<RoomDTO> UpdateRoom(int id, RoomDTO Roomdto);
 
         // Delete 
 

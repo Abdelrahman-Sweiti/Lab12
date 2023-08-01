@@ -40,9 +40,9 @@ namespace Lab12.Controllers
         // PUT: api/Amenities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
+        public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
         {
-            if (id != amenity.Id)
+            if (id != amenity.ID)
             {
                 return BadRequest();
             }
@@ -55,12 +55,12 @@ namespace Lab12.Controllers
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
+        public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
         {
             await _amenity.Create(amenity);
 
             // Rurtn a 201 Header to Browser or the postmane
-            return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
+            return CreatedAtAction("GetAmenity", new { id = amenity.ID }, amenity);
         }
 
         // DELETE: api/Amenities/5

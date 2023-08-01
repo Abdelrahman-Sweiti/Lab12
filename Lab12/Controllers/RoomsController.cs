@@ -41,9 +41,9 @@ namespace Lab12.Controllers
         // PUT: api/Rooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        public async Task<IActionResult> PutRoom(int id, RoomDTO room)
         {
-            if (id != room.Id)
+            if (id != room.ID)
             {
                 return BadRequest();
             }
@@ -56,12 +56,12 @@ namespace Lab12.Controllers
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("({roomId}/Amenity/{amenityId}")]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.Create(room);
 
             // Rurtn a 201 Header to Browser or the postmane
-            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+            return CreatedAtAction("GetRoom", new { id = room.ID }, room);
         }
 
         // DELETE: api/Rooms/5
