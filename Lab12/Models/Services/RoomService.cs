@@ -8,29 +8,36 @@ namespace Lab12.Models.DTO
     public class RoomService : IRoom
     {
         private readonly HotelContext _context;
-
-        public RoomService(HotelContext context)
+        private readonly IAmenity _amenity;
+        public RoomService(HotelContext context,IAmenity amenity)
         {
             _context = context;
-            
+            _amenity = amenity;
         }
 
 
-        public async Task<RoomDTO> Create(RoomDTO room)
+        public async Task<RoomDTO> Create(AddNewRoomDTO Newroom)
         {
 
-            _context.Entry(room).State = EntityState.Added;
+         
+
+            Room room = new Room
+            {
+                Id = Newroom.Id,
+                Name = Newroom.Name,
+                Layout = Newroom.Layout
+
+            };
+            _context.Rooms.Entry(room).State=EntityState.Added;
 
             await _context.SaveChangesAsync();
+            Newroom.Id = room.Id;
+            var x = await _amenity.GetAmenity(Newroom.AmenityID);
 
-            RoomDTO roomDTO = new RoomDTO
-            {
-                ID = room.ID,
-                Name = room.Name,
-                Layout = room.Layout
-            };
+            await AddAmenityToRoom(room.Id,x.Id);
+            RoomDTO dto = await GetRoom(Newroom.Id);
 
-            return roomDTO;
+            return dto;
         }
 
         public async Task Delete(int id)
@@ -44,15 +51,15 @@ namespace Lab12.Models.DTO
         {
             var room =  await _context.Rooms.Select(r => new RoomDTO
             {
-                ID = r.Id,
+                Id = r.Id,
                 Name = r.Name,
                 Layout = r.Layout,
                 Amenities = r.RoomAmenities.Select(a => new AmenityDTO
                 {
-                    ID = a.Amenity.Id,
+                    Id = a.Amenity.Id,
                     Name = a.Amenity.Name
                 }).ToList()
-            }).FirstOrDefaultAsync(x => x.ID == roomId);
+            }).FirstOrDefaultAsync(x => x.Id == roomId);
             return room;
         }
 
@@ -60,12 +67,12 @@ namespace Lab12.Models.DTO
         {
             return await _context.Rooms.Select(r => new RoomDTO
             {
-                ID = r.Id,
+                Id = r.Id,
                 Name = r.Name,
                 Layout = r.Layout,
                 Amenities = r.RoomAmenities.Select(a => new AmenityDTO
                 {
-                    ID = a.Amenity.Id,
+                    Id = a.Amenity.Id,
                     Name = a.Amenity.Name
                 }).ToList()
             }).ToListAsync();
@@ -75,7 +82,7 @@ namespace Lab12.Models.DTO
         {
             RoomDTO roomDTO = new RoomDTO
             {
-                ID = UpdatedRoom.ID,
+                Id = UpdatedRoom.Id,
                 Name = UpdatedRoom.Name,
                 Layout = UpdatedRoom.Layout
             };

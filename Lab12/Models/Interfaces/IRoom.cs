@@ -4,7 +4,7 @@ namespace Lab12.Models.Interfaces
 {
     public interface IRoom
     {
-        Task<RoomDTO> Create(RoomDTO Roomdto);
+        Task<RoomDTO> Create(AddNewRoomDTO NewRoomdto);
 
         // GET All
         Task<List<RoomDTO>> GetRooms();

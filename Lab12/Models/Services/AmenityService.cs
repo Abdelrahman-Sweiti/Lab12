@@ -9,7 +9,6 @@ namespace Lab12.Models.Services
     public class AmenityService : IAmenity
     {
         private readonly HotelContext _context;
-        private readonly IAmenity _amenity;
         public AmenityService(HotelContext context)
         {
             _context = context;
@@ -17,19 +16,21 @@ namespace Lab12.Models.Services
         }
 
 
-        public async Task<AmenityDTO> Create(AmenityDTO amenity)
+        public async Task<AmenityDTO> Create(AmenityDTO amenitydto)
         {
+          
+
+            Amenity amenity = new Amenity
+            {
+                Id = amenitydto.Id,
+                Name = amenitydto.Name
+            };
             _context.Entry(amenity).State = EntityState.Added;
 
             await _context.SaveChangesAsync();
+            amenitydto.Id = amenity.Id;
 
-            AmenityDTO amenityDto = new AmenityDTO
-            {
-                ID = amenity.ID,
-                Name = amenity.Name
-            };
-
-            return amenityDto;
+            return amenitydto;
         }
 
         public async Task Delete(int id)
@@ -47,7 +48,7 @@ namespace Lab12.Models.Services
 
             return await _context.Amenities.Select(a => new AmenityDTO
             {
-                ID = a.Id,
+                Id = a.Id,
                 Name = a.Name,
 
             }).ToListAsync();
@@ -60,10 +61,10 @@ namespace Lab12.Models.Services
             //return amenity;
             var amenity = await _context.Amenities.Select(a => new AmenityDTO
             {
-                ID = a.Id,
+                Id = a.Id,
                 Name = a.Name,
 
-            }).FirstOrDefaultAsync(x => x.ID == id);
+            }).FirstOrDefaultAsync(x => x.Id == id);
             return amenity;
 
 
@@ -73,7 +74,7 @@ namespace Lab12.Models.Services
         {
             AmenityDTO amenityDto = new AmenityDTO
             {
-                ID = amenity.ID,
+                Id = amenity.Id,
                 Name = amenity.Name
             };
             _context.Entry(amenity).State = EntityState.Modified;
