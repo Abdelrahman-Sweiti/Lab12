@@ -42,7 +42,7 @@ namespace Lab12.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
         {
-            if (id != amenity.ID)
+            if (id != amenity.Id)
             {
                 return BadRequest();
             }
@@ -60,7 +60,7 @@ namespace Lab12.Controllers
             await _amenity.Create(amenity);
 
             // Rurtn a 201 Header to Browser or the postmane
-            return CreatedAtAction("GetAmenity", new { id = amenity.ID }, amenity);
+            return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
         }
 
         // DELETE: api/Amenities/5

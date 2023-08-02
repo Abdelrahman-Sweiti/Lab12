@@ -57,13 +57,13 @@ namespace Lab12.Models.Services
                    RoomNumber = hr.RoomNumber,
                    Room = new RoomDTO
                    {
-                       ID = hr.Room.Id,
+                       Id = hr.Room.Id,
                        Name = hr.Room.Name,
                        Layout = hr.Room.Layout,
                        Amenities = hr.Room.RoomAmenities
                            .Select(a => new AmenityDTO
                            {
-                               ID = a.Amenity.Id,
+                               Id = a.Amenity.Id,
                                Name = a.Amenity.Name
                            }).ToList()
                    }
@@ -83,13 +83,13 @@ namespace Lab12.Models.Services
                    RoomNumber = hr.RoomNumber,
                    Room = new RoomDTO
                    {
-                       ID = hr.Room.Id,
+                       Id = hr.Room.Id,
                        Name = hr.Room.Name,
                        Layout = hr.Room.Layout,
                        Amenities = hr.Room.RoomAmenities
                            .Select(a => new AmenityDTO
                            {
-                               ID = a.Amenity.Id,
+                               Id = a.Amenity.Id,
                                Name = a.Amenity.Name
                            }).ToList()
                    }
