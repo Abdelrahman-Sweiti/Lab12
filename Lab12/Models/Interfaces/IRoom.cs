@@ -4,6 +4,13 @@ namespace Lab12.Models.Interfaces
 {
     public interface IRoom
     {
+
+        /// <summary>
+        /// this interfaces contains the basic CRUD operations for the Room Model
+        /// </summary>
+        /// <param name="amenity"></param>
+        /// <returns></returns>
+
         Task<RoomDTO> Create(AddNewRoomDTO NewRoomdto);
 
         // GET All

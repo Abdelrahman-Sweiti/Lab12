@@ -32,7 +32,48 @@ namespace Lab12
             builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
 
 
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+
+                {
+                    Title = "Lab12",
+                    Version = "v1",
+
+
+                }
+
+
+                    );
+            
+            
+            
+            });
+
+
+
+
+
+
             var app = builder.Build();
+
+
+            app.UseSwagger(options => {
+
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            
+            
+            });
+
+
+            app.UseSwaggerUI(options => {
+
+                options.SwaggerEndpoint("/api/v1/swagger.json","Lab12");
+                options.RoutePrefix = "docs";
+            
+            
+            });
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

@@ -16,6 +16,13 @@ namespace Lab12.Models.Services
         }
 
 
+
+        /// <summary>
+        /// this Create method adds a new record from AmenityDTO by passing it model in the patameter then we bind the props from the
+        /// original model and with the DTO model, then we save the changes in the database for the new record 
+        /// </summary>
+        /// <param name="amenitydto"></param>
+        /// <returns></returns>
         public async Task<AmenityDTO> Create(AmenityDTO amenitydto)
         {
           
@@ -33,6 +40,12 @@ namespace Lab12.Models.Services
             return amenitydto;
         }
 
+
+        /// <summary>
+        /// this method deletes an existing record of type Amenity in the database by passing the ID in the parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task Delete(int id)
         {
             Amenity amenity = await _context.Amenities.FindAsync(id);
@@ -42,6 +55,11 @@ namespace Lab12.Models.Services
             await _context.SaveChangesAsync();
         }
 
+
+        /// <summary>
+        /// this methods retrieves all records of Amenities from the database and display all it props
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<AmenityDTO>> GetAmenities()
         {
            
@@ -54,6 +72,12 @@ namespace Lab12.Models.Services
             }).ToListAsync();
         }
 
+
+        /// <summary>
+        /// this method retrieve a single record of type Amenity from the database by the passed ID in the parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<AmenityDTO> GetAmenity(int id)
         {
             //Amenity amenity = await _context.Amenities.FindAsync(id);
@@ -70,6 +94,14 @@ namespace Lab12.Models.Services
 
         }
 
+
+        /// <summary>
+        /// this method updates an existing record of type Amenity in the database by passing the ID of that record and the new model data the user input
+        /// then we swap/change the old data with the new data that the user inserted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amenity"></param>
+        /// <returns></returns>
         public async Task<AmenityDTO> UpdateAmenity(int id, AmenityDTO amenity)
         {
             AmenityDTO amenityDto = new AmenityDTO

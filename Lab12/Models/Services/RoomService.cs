@@ -13,9 +13,17 @@ namespace Lab12.Models.DTO
         {
             _context = context;
             _amenity = amenity;
+          
         }
 
 
+
+        /// <summary>
+        /// this Create method adds a new record from Room by passing it model in the patameter then we bind the props from the
+        /// original model and with the DTO model, then we save the changes in the database for the new record 
+        /// </summary>
+        /// <param name="amenitydto"></param>
+        /// <returns></returns>
         public async Task<RoomDTO> Create(AddNewRoomDTO Newroom)
         {
 
@@ -40,6 +48,12 @@ namespace Lab12.Models.DTO
             return dto;
         }
 
+
+        /// <summary>
+        /// this method deletes an existing record of type Amenity in the database by passing the ID in the parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task Delete(int id)
         {
             Room room = await _context.Rooms.FindAsync(id);
@@ -47,6 +61,12 @@ namespace Lab12.Models.DTO
             await _context.SaveChangesAsync();
         }
 
+
+        /// <summary>
+        /// this method retrieve a single record of type Room from the database by the passed ID in the parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<RoomDTO> GetRoom(int roomId)
         {
             var room =  await _context.Rooms.Select(r => new RoomDTO
@@ -63,6 +83,12 @@ namespace Lab12.Models.DTO
             return room;
         }
 
+
+
+        /// <summary>
+        /// this methods retrieves all records of Rooms from the database and display all it props
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<RoomDTO>> GetRooms()
         {
             return await _context.Rooms.Select(r => new RoomDTO
@@ -78,6 +104,15 @@ namespace Lab12.Models.DTO
             }).ToListAsync();
         }
 
+
+
+        /// <summary>
+        /// this method updates an existing record of type Room in the database by passing the ID of that record and the new model data the user input
+        /// then we swap/change the old data with the new data that the user inserted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amenity"></param>
+        /// <returns></returns>
         public async Task<RoomDTO> UpdateRoom(int id, RoomDTO UpdatedRoom)
         {
             RoomDTO roomDTO = new RoomDTO
@@ -97,6 +132,12 @@ namespace Lab12.Models.DTO
 
 
       
+        /// <summary>
+        /// this method adds an amenity record to a room by passing the RoomID and the AmenityID in the parameter
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="amenityId"></param>
+        /// <returns></returns>
         public async Task AddAmenityToRoom(int roomId, int amenityId)
         {
             RoomAmenity newRoomAmenity = new RoomAmenity()
@@ -108,7 +149,12 @@ namespace Lab12.Models.DTO
             await _context.SaveChangesAsync();
         }
 
-      
+        /// <summary>
+        /// this method removes an amenity record to a room by passing the RoomID and the AmenityID in the parameter
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="amenityId"></param>
+        /// <returns></returns>
         public async Task RemoveAmentityFromRoom(int roomId, int amenityId)
         {
             var removeAmentity = _context.RoomAmenities.FirstOrDefaultAsync(x => x.RoomID == roomId && x.AmenityID == amenityId);

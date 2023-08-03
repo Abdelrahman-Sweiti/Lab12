@@ -4,6 +4,13 @@ namespace Lab12.Models.Interfaces
 {
     public interface IAmenity
     {
+        /// <summary>
+        /// this interfaces contains the basic CRUD operations for the Amenity Model
+        /// </summary>
+        /// <param name="amenity"></param>
+        /// <returns></returns>
+
+
         Task<AmenityDTO> Create(AmenityDTO amenity);
 
         // GET All

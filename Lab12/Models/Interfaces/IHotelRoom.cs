@@ -4,6 +4,12 @@ namespace Lab12.Models.Interfaces
 {
     public interface IHotelRoom
     {
+        /// <summary>
+        /// this interfaces contains the basic CRUD operations for the HotelRoom Model
+        /// </summary>
+        /// <param name="amenity"></param>
+        /// <returns></returns>
+
         Task<HotelRoomDTO> Create(HotelRoomDTO Hotelroomdto,int HotelID);
 
         // GET All
