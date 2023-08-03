@@ -18,6 +18,13 @@ namespace Lab12.Models.Services
             
         }
 
+
+        /// <summary>
+        /// this Create method adds a new record from HotelRoom by passing it model in the patameter and the HotelID then we bind the props from the
+        /// original model and with the DTO model, then we save the changes in the database for the new record 
+        /// </summary>
+        /// <param name="amenitydto"></param>
+        /// <returns></returns>
         public async Task<HotelRoomDTO> Create( HotelRoomDTO hotelRoom, int hotelId)
         {
             _context.Entry(hotelRoom).State = EntityState.Added;
@@ -36,6 +43,12 @@ namespace Lab12.Models.Services
             return room;
         }
 
+
+        /// <summary>
+        /// this method deletes an existing record of type HotelRoom in the database by passing the HotelID and RoomNumber in the parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task Delete(int hotelId, int roomNumber)
         {
             var hotelRoom = await _context.HotelRoom
@@ -46,6 +59,12 @@ namespace Lab12.Models.Services
             await _context.SaveChangesAsync();
         }
 
+
+        /// <summary>
+        /// this method retrieve a single record of type HotelRoom from the database by the passed HotelID and RoomNumber in the parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNumber)
         {
             var hotelroom = await _context.HotelRoom
@@ -71,6 +90,11 @@ namespace Lab12.Models.Services
             return hotelroom;
         }
 
+
+        /// <summary>
+        /// this methods retrieves all records of HotelRoom from the database and display all it props
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId)
         {
             return await _context.HotelRoom
@@ -96,6 +120,14 @@ namespace Lab12.Models.Services
                }).ToListAsync();
         }
 
+
+        /// <summary>
+        /// this method updates an existing record of type HotelRoom in the database by passing the HotelID and RoomNumber of that record and the new model data the user input
+        /// then we swap/change the old data with the new data that the user inserted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amenity"></param>
+        /// <returns></returns>
         public async Task<HotelRoomDTO> UpdateHotelRoom(int hotelId, int roomNumber, HotelRoomDTO hr)
         {
             HotelRoom roomDetails = new HotelRoom
