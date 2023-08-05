@@ -9,8 +9,8 @@
 
 
         //Props
-        public List<RoomAmenity> RoomAmenities { get; set; }
-        public List<HotelRoom> HotelRoom { get; set; }
+        public List<RoomAmenity>? RoomAmenities { get; set; }
+        public List<HotelRoom>? HotelRoom { get; set; }
 
 
     }

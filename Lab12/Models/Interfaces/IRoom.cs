@@ -11,7 +11,7 @@ namespace Lab12.Models.Interfaces
         /// <param name="amenity"></param>
         /// <returns></returns>
 
-        Task<RoomDTO> Create(AddNewRoomDTO NewRoomdto);
+        Task<RoomDTO> Create(RoomDTO RoomDTO);
 
         // GET All
         Task<List<RoomDTO>> GetRooms();

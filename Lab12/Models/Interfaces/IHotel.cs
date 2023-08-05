@@ -9,7 +9,7 @@ namespace Lab12.Models.Interfaces
         /// </summary>
         /// <param name="amenity"></param>
         /// <returns></returns>
-        Task<HotelDTO> Create(HotelDTO Hoteldto);
+        Task<Hotel> Create(Hotel hotel);
 
         // GET All
         Task<List<HotelDTO>> GetHotels();
@@ -19,7 +19,7 @@ namespace Lab12.Models.Interfaces
         Task<HotelDTO> GetHotel(int HotelId);
 
         // Update
-        Task<HotelDTO> UpdateHotel(int id, HotelDTO Hoteldto);
+        Task<Hotel> UpdateHotel(int id, Hotel hotel);
 
         // Delete 
 

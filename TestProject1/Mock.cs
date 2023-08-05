@@ -1,5 +1,6 @@
 ﻿using Lab12.Data;
 using Lab12.Models;
+using Lab12.Models.DTO;
 using Lab12.Models.Interfaces;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,22 @@ namespace TestProject1
             _db.Database.EnsureCreated();
         }
 
+        //protected async Task<RoomDTO> CreateDataBase()
+        //{
+        //    var room = new Room()
+        //    {
+
+        //        Name = "Test1",
+        //        Layout = 1
+
+
+        //    };
+
+           
+        //    return room;
+
+        //}
+
 
 
         protected async Task<Room> CreateAndSaveTestRoom()
@@ -39,6 +56,61 @@ namespace TestProject1
             return room;
         
         }
+
+        protected async Task<Room> DeleteAndSaveRoomTest()
+        {
+            var room = new Room() { Id=1,Name = "Test1", Layout = 1 };
+             _db.Rooms.Remove(room);
+            await _db.SaveChangesAsync();
+
+            var deletedRoom = await _db.Rooms.FindAsync(room.Id);
+            Assert.Null(deletedRoom);
+
+            return room;
+        }
+
+
+        protected async Task<Amenity> DeleteAndSaveAmenityTest()
+        {
+            var amenity = new Amenity() { Id = 1, Name = "Test1"};
+            _db.Amenities.Remove(amenity);
+            await _db.SaveChangesAsync();
+
+            var deletedAmenity = await _db.Amenities.FindAsync(amenity.Id);
+            Assert.Null(deletedAmenity);
+
+            return amenity;
+        }
+
+
+        //protected async Task<RoomDTO> CreateRoomTest()
+        //{
+
+        //    var room = new Room() {
+        //        Id = 1,
+        //        Name = "Test1",
+        //        Layout = 1
+
+        //    };
+
+        //    _db.Rooms.Add(room);
+        //    await _db.SaveChangesAsync();
+        //    return room;
+        
+        //}
+
+
+        //protected async Task<Hotel> CreateAndSaveTestHotel()
+        //{
+        //    var hotel = new Hotel() { Id = 1, Name = "Lux Room", StreetAddress = "TV-Street", City = "Amman", Country = "Jordan", Phone = "0796153883", State = "Middle-East" };
+        //    _db.Hotels.Add(hotel);
+        //    await _db.SaveChangesAsync();
+
+        //    Assert.NotEqual(0, hotel.Id);
+
+        //    return hotel;
+
+        //}
 
         protected async Task<Amenity> CreateAndSaveTestAmenity()
         {

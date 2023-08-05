@@ -15,6 +15,12 @@ namespace Lab12.Models.DTO
             _amenity = amenity;
           
         }
+        public RoomService(HotelContext context)
+        {
+            _context = context;
+           
+
+        }
 
 
 
@@ -24,14 +30,13 @@ namespace Lab12.Models.DTO
         /// </summary>
         /// <param name="amenitydto"></param>
         /// <returns></returns>
-        public async Task<RoomDTO> Create(AddNewRoomDTO Newroom)
+        public async Task<RoomDTO> Create(RoomDTO Newroom)
         {
 
          
 
             Room room = new Room
             {
-                Id = Newroom.Id,
                 Name = Newroom.Name,
                 Layout = Newroom.Layout
 
@@ -40,12 +45,8 @@ namespace Lab12.Models.DTO
 
             await _context.SaveChangesAsync();
             Newroom.Id = room.Id;
-            var x = await _amenity.GetAmenity(Newroom.AmenityID);
 
-            await AddAmenityToRoom(room.Id,x.Id);
-            RoomDTO dto = await GetRoom(Newroom.Id);
-
-            return dto;
+            return Newroom;
         }
 
 
