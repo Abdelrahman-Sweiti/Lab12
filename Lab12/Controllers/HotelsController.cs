@@ -40,9 +40,9 @@ namespace Lab12.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, HotelDTO hotel)
+        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
-            if (id != hotel.ID)
+            if (id != hotel.Id)
             {
                 return BadRequest();
             }
@@ -55,12 +55,12 @@ namespace Lab12.Controllers
         // POST: api/Hotels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotel)
+        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
             await _hotel.Create(hotel);
 
             // Rurtn a 201 Header to Browser or the postmane
-            return CreatedAtAction("GetHotel", new { id = hotel.ID }, hotel);
+            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
 
         // DELETE: api/Hotels/5

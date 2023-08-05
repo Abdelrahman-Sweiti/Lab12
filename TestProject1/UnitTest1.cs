@@ -24,6 +24,78 @@ namespace TestProject1
 
 
         [Fact]
+        public async void Delete_Room_FromDataBase_Test()
+        {
+            // Arrange 
+            var room = await DeleteAndSaveRoomTest();
+
+            var service = new RoomService(_db);
+
+            // Act
+            var deletedRoom = await service.GetRoom(room.Id);
+
+            // Assert
+            Assert.Null(deletedRoom);
+        }
+
+
+        [Fact]
+        public async void Create_Room_Test() {
+
+            var room = new RoomDTO()
+            {
+              
+                Name = "Test1",
+                Layout = 1
+                
+
+            };
+            var service = new RoomService( _db,_am);
+
+            var add = await service.Create(room);
+
+            Assert.NotNull(add);
+
+        }
+
+        [Fact]
+        public async void Create_Amenity_Test()
+        {
+
+            var amenity = new AmenityDTO()
+            {
+
+                Name = "Test1",
+              
+
+
+            };
+            var service = new AmenityService(_db);
+
+            var add = await service.Create(amenity);
+
+            Assert.NotNull(add);
+
+        }
+
+
+        [Fact]
+        public async void Delete_Amenity_FromDataBase_Test()
+        {
+            // Arrange 
+            var amenity = await DeleteAndSaveAmenityTest();
+
+            var service = new AmenityService(_db);
+
+            // Act
+            var deletedAmenity = await service.GetAmenity(amenity.Id);
+
+            // Assert
+            Assert.Null(deletedAmenity);
+        }
+
+
+        [Fact]
         public async void DataSeedingTest_HotelDbSet()
         {
             //Arrange

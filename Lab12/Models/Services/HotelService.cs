@@ -23,24 +23,14 @@ namespace Lab12.Models.Services
         /// </summary>
         /// <param name="amenitydto"></param>
         /// <returns></returns>
-        public async Task<HotelDTO> Create(HotelDTO hotel)
+        public async Task<Hotel> Create(Hotel hotel)
         {
 
-            _context.Entry(hotel).State = EntityState.Added;
 
+            _context.Hotels.Add(hotel);
             await _context.SaveChangesAsync();
 
-            HotelDTO hotelDTO = new HotelDTO
-            {
-                ID = hotel.ID,
-                Name = hotel.Name,
-                StreetAddress = hotel.StreetAddress,
-                City = hotel.City,
-                State = hotel.State,
-                Phone = hotel.Phone,
-            };
-
-            return hotelDTO;
+            return hotel;
         }
 
 
@@ -148,23 +138,14 @@ namespace Lab12.Models.Services
         /// <param name="id"></param>
         /// <param name="amenity"></param>
         /// <returns></returns>
-        public async Task<HotelDTO> UpdateHotel(int id, HotelDTO hotel)
+        public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
         {
-            HotelDTO hotelDTO = new HotelDTO
-            {
-                ID = hotel.ID,
-                Name = hotel.Name,
-                StreetAddress = hotel.StreetAddress,
-                City = hotel.City,
-                State = hotel.State,
-                Phone = hotel.Phone,
-            };
-
+            hotel.Id = id;
             _context.Entry(hotel).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
 
-            return hotelDTO;
+            return hotel;
         }
     }
 }

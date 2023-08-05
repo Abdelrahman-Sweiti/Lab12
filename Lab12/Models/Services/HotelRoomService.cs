@@ -31,7 +31,7 @@ namespace Lab12.Models.Services
 
             await _context.SaveChangesAsync();
 
-            HotelRoomDTO room = new HotelRoomDTO
+            HotelRoom room = new HotelRoom
             {
                 HotelID = hotelId,
                 RoomNumber = hotelRoom.RoomNumber,
@@ -40,7 +40,7 @@ namespace Lab12.Models.Services
                 RoomID = hotelRoom.RoomID
             };
 
-            return room;
+            return hotelRoom;
         }
 
 
