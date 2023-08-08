@@ -27,5 +27,8 @@ lastly i migrated the models into the MSMS and updated the database and created 
 ![image](https://github.com/Abdelrahman-Sweiti/Lab12/assets/102755704/84472bc9-7229-4c0f-953a-1b7889dc0526)
 
 
+## Lab17 Time Taken
+2 hours
+
 ## Lab18
 Identity Demystified is a comprehensive guide that delves deeper into the intricacies of the Identity framework in ASP.NET Core. It explores the inner workings of Identity, including how it utilizes ASP.NET Core's middleware, data storage with Entity Framework, and customization options. The guide covers various scenarios, such as implementing custom user properties, external authentication providers, and securing Identity with two-factor authentication. With Identity Demystified, developers can gain a clearer understanding of Identity's core concepts and unlock its full potential in their web applications.
