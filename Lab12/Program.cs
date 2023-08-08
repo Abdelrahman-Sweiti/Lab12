@@ -1,8 +1,10 @@
 using Lab12.Data;
+using Lab12.Models;
 using Lab12.Models.DTO;
 using Lab12.Models.Interfaces;
 using Lab12.Models.Services;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
@@ -26,6 +28,13 @@ namespace Lab12
                 .AddDbContext<HotelContext>
             (opions => opions.UseSqlServer(connString));
 
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+
+                }).AddEntityFrameworkStores<HotelContext> ();
+            builder.Services.AddTransient<IUser, UserService>();
             builder.Services.AddTransient<IAmenity, AmenityService>();
             builder.Services.AddTransient<IRoom, RoomService>();
             builder.Services.AddTransient<IHotel, HotelService>();

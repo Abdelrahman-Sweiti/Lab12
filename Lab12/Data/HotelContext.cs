@@ -1,9 +1,10 @@
 ﻿using Lab12.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab12.Data
 {
-    public class HotelContext : DbContext
+    public class HotelContext : IdentityDbContext<ApplicationUser>
     {
 
         public HotelContext(DbContextOptions options) : base(options)
@@ -14,6 +15,9 @@ namespace Lab12.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel() { Id = 1, Name = "Lux Room", StreetAddress = "TV-Street", City = "Amman", Country = "Jordan", Phone = "0796153883", State = "Middle-East" },
                 new Hotel() { Id = 2, Name = "Grand Hotel", StreetAddress = "Central Avenue", City = "New York", Country = "USA", Phone = "1234567890", State = "North America" },
