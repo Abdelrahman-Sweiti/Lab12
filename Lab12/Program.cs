@@ -3,6 +3,7 @@ using Lab12.Models;
 using Lab12.Models.DTO;
 using Lab12.Models.Interfaces;
 using Lab12.Models.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,11 @@ namespace Lab12
                 options.User.RequireUniqueEmail = true;
 
                 }).AddEntityFrameworkStores<HotelContext> ();
+            builder.Services.AddScoped<JwtTokenService>();
+
+
+
+
             builder.Services.AddTransient<IUser, UserService>();
             builder.Services.AddTransient<IAmenity, AmenityService>();
             builder.Services.AddTransient<IRoom, RoomService>();
@@ -41,6 +47,25 @@ namespace Lab12
             builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
 
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                // Tell the authenticaion scheme "how/where" to validate the token + secret
+                options.TokenValidationParameters = JwtTokenService.GetValidationPerameters(builder.Configuration);
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                // Add "Name of Policy", and the Lambda returns a definition
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
+                options.AddPolicy("deposit", policy => policy.RequireClaim("permissions", "deposit"));
+            });
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -96,7 +121,7 @@ namespace Lab12
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.MapRazorPages();

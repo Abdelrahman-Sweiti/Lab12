@@ -1,8 +1,10 @@
 ﻿using Lab12.Models.DTO;
 using Lab12.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Lab12.Controllers
 {
@@ -17,7 +19,7 @@ namespace Lab12.Controllers
             userService = service;
         }
 
-
+        [Authorize(Roles = "District Manager")]
         [HttpPost("Register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterUser data)
         { 
@@ -44,6 +46,12 @@ namespace Lab12.Controllers
 
             }
             return user;
+        }
+        [Authorize(Policy = "create")]
+        [HttpGet("Profile")]
+        public async Task<ActionResult<UserDTO>> Profile()
+        {
+            return await userService.GetUser(this.User); ;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Lab12.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,12 @@ namespace Lab12.Data
             );
 
 
+
+            SeedRole(modelBuilder, "District Manager", "create", "update", "delete");
+            SeedRole(modelBuilder, "Property Manager", "create", "update");
+            SeedRole(modelBuilder, "Agent", "create", "update", "delete");
+
+
             modelBuilder.Entity<RoomAmenity>().HasKey(
                 RoomAmenities => new
                 {
@@ -60,7 +67,30 @@ namespace Lab12.Data
 
 
 
+        private int id = 1;
+        private void SeedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
 
+            // Go through the permissions list and seed a new entry for each
+            var roleClaims = permissions.Select(permission =>
+             new IdentityRoleClaim<string>
+             {
+                 Id = id++,
+                 RoleId = role.Id,
+                 ClaimType = "permissions",
+                 ClaimValue = permission
+             }
+            );
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaims);
+        }
 
 
 
