@@ -2,16 +2,20 @@
 using Lab12.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab12.Models.Services
 {
     public class UserService : IUser
     {
         private UserManager<ApplicationUser> userManager;
+        private JwtTokenService tokenService;
 
-        public UserService(UserManager<ApplicationUser> manager )
+        public UserService(UserManager<ApplicationUser> manager , JwtTokenService tokenService)
         {
             userManager = manager;
+            this.tokenService = tokenService;
         }
 
         public async Task<UserDTO> Authenticate(string username, string password)
@@ -22,9 +26,21 @@ namespace Lab12.Models.Services
 
             if (ValidPassowrd)
             {
-                return new UserDTO { Id = user.Id, Username = user.UserName };
+                return new UserDTO { Id = user.Id, Username = user.UserName, Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)) };
             }
             return null;
+        }
+
+        public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+            };
         }
 
         public async Task<UserDTO> Register(RegisterUser registerUser, ModelStateDictionary modelState)
@@ -41,10 +57,13 @@ namespace Lab12.Models.Services
 
             if (result.Succeeded)
             {
+                await userManager.AddToRolesAsync(user, registerUser.Roles);
+
                 return new UserDTO()
                 {
                     Id = user.Id,
-                    Username = user.UserName
+                    Username = user.UserName,
+                     Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
 
                 };
             }
